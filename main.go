@@ -4,12 +4,13 @@ import (
 	"database/sql"
 	"html/template"
 	"net/http"
+	"time"
 
 	_ "github.com/lib/pq"
 )
 
 func connectDB() *sql.DB {
-	connection := "user=usernamepg dbname=db password=password123 host=localhost sslmode=disable"
+	connection := "user=usernamepg dbname=db password=password123 host=postgresgo sslmode=disable"
 
 	db, err := sql.Open("postgres", connection)
 
@@ -20,6 +21,7 @@ func connectDB() *sql.DB {
 }
 
 type Product struct {
+	Id          int
 	Name        string
 	Description string
 	Price       float64
@@ -29,18 +31,43 @@ type Product struct {
 var templat = template.Must(template.ParseGlob("templates/*.html"))
 
 func main() {
-	db := connectDB()
-	defer db.Close() // close the function
 	http.HandleFunc("/", index)
 	http.ListenAndServe(":8080", nil)
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	products := []Product{
-		{Name: "Iphone 99", Description: "New Smart Phone", Price: 1200.00, Quantity: 12},
-		{Name: "Notebook intel 99X", Description: "A New intel notebook", Price: 3000.14, Quantity: 5},
-		{"Phone razer", "The best phone", 123.23, 5},
-		{"Charger Gorila", "99W fast charger", 134.53, 19},
+	db := connectDB()
+
+	selectProduct, err := db.Query("select * from products")
+
+	if err != nil {
+		panic(err.Error())
 	}
+
+	p := Product{}
+	products := []Product{}
+
+	for selectProduct.Next() {
+		var id, quantity int
+		var name, description string
+		var price float64
+		var createdAt time.Time
+
+		err = selectProduct.Scan(&id, &name, &description, &price, &quantity, &createdAt)
+
+		if err != nil {
+			panic(err.Error())
+		}
+
+		p.Id = id
+		p.Name = name
+		p.Description = description
+		p.Price = price
+		p.Quantity = quantity
+
+		products = append(products, p)
+	}
+
 	templat.ExecuteTemplate(w, "Index", products)
+	defer db.Close() // Close connection
 }
