@@ -4,6 +4,7 @@ RUN apt update -y && apt install -y libhyperscan-dev
 
 WORKDIR /usr/src/app
 
+COPY go.mod go.sum ./
 
 COPY . .
 
