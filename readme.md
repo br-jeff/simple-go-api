@@ -10,5 +10,5 @@ It's a simple htmx project designed for a smooth user experience without full pa
 
 for runnning migrations waiting for container start and run: 
 ```bash
-docker exec -it go-htmx migrate -path /usr/src/app/migrations -database "postgresql://usernamepg:password123@postgres-go:5432/db?sslmode=disable" -verbose up
+docker exec -it go-htmx migrate -path /usr/src/app/migrations -database "postgresql://usernamepg:password123@postgresgo:5432/db?sslmode=disable" -verbose up
 ```

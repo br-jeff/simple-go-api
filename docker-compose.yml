@@ -16,7 +16,7 @@ services:
       - db
     db:
       image: postgres
-      container_name: postgres-go
+      container_name: postgresgo
       ports:
         - "5432:5432"
       environment:
@@ -24,7 +24,7 @@ services:
         POSTGRES_DB: db
         POSTGRES_PASSWORD: password123
       healthcheck:
-        test: [ "CMD-SHELL", "pg_isready -U db" ]
+        test: [ "CMD-SHELL", "pg_isready" ]
         interval: 30s
         timeout: 30s
         retries: 3
