@@ -9,7 +9,7 @@ import (
 )
 
 func connectDB() *sql.DB {
-	connection := "user=user dbname=db password=password host=localhost sslmode=disable"
+	connection := "user=usernamepg dbname=db password=password123 host=localhost sslmode=disable"
 
 	db, err := sql.Open("postgres", connection)
 

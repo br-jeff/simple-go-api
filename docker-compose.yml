@@ -1,7 +1,8 @@
 version: '3.4'
 
 services: 
-    go-api: 
+    go-api:
+      container_name: go-htmx 
       build:
         context: ./
       ports:
@@ -9,6 +10,8 @@ services:
       environment:
         URL: localhost
         PORT: 8080
+      links:
+      - db
       depends_on:
       - db
     db:
@@ -17,11 +20,11 @@ services:
       ports:
         - "5432:5432"
       environment:
-        POSTGRES_USER: user
+        POSTGRES_USER: usernamepg
         POSTGRES_DB: db
-        POSTGRES_PASSWORD: password
+        POSTGRES_PASSWORD: password123
       healthcheck:
-        test: [ "CMD-SHELL", "pg_isready -U dev" ]
+        test: [ "CMD-SHELL", "pg_isready -U db" ]
         interval: 30s
         timeout: 30s
         retries: 3
