@@ -31,9 +31,7 @@ func ProductDelete(w http.ResponseWriter, r *http.Request) {
 }
 
 func ProductEdit(w http.ResponseWriter, r *http.Request) {
-	productId := r.URL.Query().Get("id")
-	product := repository.ProductFindById(productId)
-	templat.ExecuteTemplate(w, "Edit", product)
+	handler.ProductEdit(w, r)
 }
 
 func ProductUpdate(w http.ResponseWriter, r *http.Request) {
