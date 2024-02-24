@@ -10,4 +10,5 @@ func Bootstrap() {
 	http.HandleFunc("/", controller.ProductIndex)
 	http.HandleFunc("/new", controller.ProductNew)
 	http.HandleFunc("/insert", controller.ProductCreate)
+	http.HandleFunc("/delete", controller.ProductDelete)
 }

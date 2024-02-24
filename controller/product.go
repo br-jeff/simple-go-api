@@ -43,3 +43,9 @@ func ProductCreate(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusMovedPermanently)
 	}
 }
+
+func ProductDelete(w http.ResponseWriter, r *http.Request) {
+	productId := r.URL.Query().Get("id")
+	repository.ProductDelete(productId)
+	http.Redirect(w, r, "/", http.StatusMovedPermanently)
+}
