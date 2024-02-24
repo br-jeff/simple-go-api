@@ -107,3 +107,17 @@ func ProductFindById(id string) model.Product {
 	defer db.Close()
 	return productData
 }
+
+func ProductUpdate(id int, name string, description string, quantity int, price float64) {
+	db := config.ConnectDB()
+
+	updateProduct, err := db.Prepare("update products set name=$1, description=$2, price=$3, quantity=$4 where id = $5")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	updateProduct.Exec(name, description, price, quantity, id)
+
+	defer db.Close()
+}

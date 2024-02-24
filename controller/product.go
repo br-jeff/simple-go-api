@@ -55,3 +55,32 @@ func ProductEdit(w http.ResponseWriter, r *http.Request) {
 	product := repository.ProductFindById(productId)
 	templat.ExecuteTemplate(w, "Edit", product)
 }
+
+func ProductUpdate(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		name := r.FormValue("name")
+		description := r.FormValue("description")
+
+		id, err := strconv.Atoi(r.FormValue("id"))
+
+		if err != nil {
+			log.Println("erro when try to convert id", err)
+		}
+
+		price, err := strconv.ParseFloat(r.FormValue("price"), 64)
+
+		if err != nil {
+			log.Println("erro when try to convert price", err)
+		}
+
+		quantity, err := strconv.Atoi(r.FormValue("quantity"))
+
+		if err != nil {
+			log.Println("erro when try to convert quantity", err)
+		}
+
+		repository.ProductUpdate(id, name, description, quantity, price)
+
+		http.Redirect(w, r, "/", http.StatusMovedPermanently)
+	}
+}
