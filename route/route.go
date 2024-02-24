@@ -8,4 +8,6 @@ import (
 
 func Bootstrap() {
 	http.HandleFunc("/", controller.ProductIndex)
+	http.HandleFunc("/new", controller.ProductNew)
+
 }
