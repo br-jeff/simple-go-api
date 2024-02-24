@@ -27,9 +27,7 @@ func ProductCreate(w http.ResponseWriter, r *http.Request) {
 }
 
 func ProductDelete(w http.ResponseWriter, r *http.Request) {
-	productId := r.URL.Query().Get("id")
-	repository.ProductDelete(productId)
-	http.Redirect(w, r, "/", http.StatusMovedPermanently)
+	handler.ProductDelete(w, r)
 }
 
 func ProductEdit(w http.ResponseWriter, r *http.Request) {
