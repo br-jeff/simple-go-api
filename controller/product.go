@@ -49,3 +49,9 @@ func ProductDelete(w http.ResponseWriter, r *http.Request) {
 	repository.ProductDelete(productId)
 	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 }
+
+func ProductEdit(w http.ResponseWriter, r *http.Request) {
+	productId := r.URL.Query().Get("id")
+	product := repository.ProductFindById(productId)
+	templat.ExecuteTemplate(w, "Edit", product)
+}
