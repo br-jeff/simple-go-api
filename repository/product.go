@@ -44,5 +44,18 @@ func FindAll() []model.Product {
 	defer db.Close() // Close connection
 
 	return products
+}
 
+func InsertProduct(name string, description string, price float64, quantity int) {
+	db := config.ConnectDB()
+
+	productInsetTemplate, err := db.Prepare("INSERT INTO products (name, description, price, quantity) VALUES ($1, $2, $3, $4);")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	productInsetTemplate.Exec(name, description, price, quantity)
+
+	defer db.Close()
 }
