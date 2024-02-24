@@ -3,15 +3,10 @@ package main
 import (
 	"net/http"
 
-	"github.com/br-jeff/simple-go-htmx/controller"
+	"github.com/br-jeff/simple-go-htmx/route"
 )
 
 func main() {
-	http.HandleFunc("/", index)
+	route.Bootstrap()
 	http.ListenAndServe(":8080", nil)
-}
-
-func index(w http.ResponseWriter, req *http.Request) {
-	controller.ProductIndex(w, req)
-
 }
